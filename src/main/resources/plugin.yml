@@ -1,0 +1,10 @@
+name: HephaestusForge
+version: 1.0
+main: wbe.hephaestusForge.HephaestusForge
+api-version: 1.21
+author: wbe
+commands:
+  HephaestusForge:
+    description: HephaestusForge main command
+    aliases: [hf, hephaforge, heforge, hforge, hephaf]
+    permission: hephaestusForge.command

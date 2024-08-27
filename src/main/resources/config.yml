@@ -1,0 +1,27 @@
+Messages:
+  notEnoughArgs: '&b[&cForja&b] &eNo has especificado suficientes argumentos.'
+  noPermission: '&b[&cForja&b] &eNo tienes permiso para hacer esto.'
+  itemGiven: '&b[&cForja&b] &eHas dado %item% &ea %player%.'
+  itemGivenPlayer: '&b[&cForja&b] &eHas conseguido un %item%&e.'
+  itemGiveArgs: '&b[&cForja&b] &eEl uso es /hephaestusforge give <Objeto> [Jugador]'
+  itemNotFound: '&b[&cForja&b] &eNo se ha encontrado el objeto %item%.'
+  itemUsed: '&b[&cForja&b] &eObjeto usado con éxito.'
+  reload: '&b[&cForja&b] &eSe ha recargado la configuración del plugin.'
+  help:
+    - "&d-===- &c[Forja] &d-===-"
+    - "&b/hephaestusforge &eMuestra esta página."
+    - "&b/hephaestusforge give <Objeto> [Jugador] &eDa un objeto a un jugador."
+    - "&b/hephaestusforge reload &eRecarga el plugin."
+    - "&b"
+    - "&eLeyenda: &b<> &eObligatorio  &b[] &eOpcional"
+
+Items:
+  example:
+    material: STONE
+    name: "&dExample item"
+    lore:
+      - ""
+      - "&7Example lore."
+    commands:
+      - "bc test %player%"
+    glow: true
