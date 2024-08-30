@@ -1,11 +1,14 @@
 package wbe.hephaestusForge.commads;
 
+import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import wbe.hephaestusForge.HephaestusForge;
+import wbe.hephaestusForge.items.ExecutableItem;
 import wbe.hephaestusForge.items.Item;
 import wbe.hephaestusForge.util.Utilities;
 

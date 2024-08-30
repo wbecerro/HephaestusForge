@@ -18,7 +18,7 @@ public class Config {
 
         for(String item : config.getConfigurationSection("Items").getKeys(false)) {
             Material material = Material.valueOf(config.getString("Items." + item + ".material"));
-            String name = config.getString("Items." + item + ".name");
+            String name = config.getString("Items." + item + ".name").replace("&", "§");
             List<String> lore = config.getStringList("Items." + item + ".lore");
             List<String> commands = config.getStringList("Items." + item + ".commands");
             boolean glow = config.getBoolean("Items." + item + ".glow");
