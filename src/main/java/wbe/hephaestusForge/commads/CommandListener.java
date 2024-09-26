@@ -1,14 +1,11 @@
 package wbe.hephaestusForge.commads;
 
-import net.md_5.bungee.api.chat.*;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import wbe.hephaestusForge.HephaestusForge;
-import wbe.hephaestusForge.items.ExecutableItem;
 import wbe.hephaestusForge.items.Item;
 import wbe.hephaestusForge.util.Utilities;
 
@@ -17,10 +14,6 @@ public class CommandListener implements CommandExecutor {
     private HephaestusForge plugin = HephaestusForge.getInstance();
 
     private Utilities utilities = new Utilities();
-
-    public CommandListener() {
-
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -39,7 +32,7 @@ public class CommandListener implements CommandExecutor {
                 for(String line : HephaestusForge.messages.help) {
                     sender.sendMessage(line.replace("&", "§"));
                 }
-            } else if(args[0].equalsIgnoreCase("give")){
+            } else if(args[0].equalsIgnoreCase("give")) {
                 if(!sender.hasPermission("hephaestusforge.command.give")) {
                     sender.sendMessage(HephaestusForge.messages.noPermission);
                     return false;
