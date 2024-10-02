@@ -1,6 +1,7 @@
 package wbe.hephaestusForge.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -58,10 +59,13 @@ public class PlayerInteractListeners implements Listener {
             return;
         }
 
+        Location playerLocation = player.getLocation();
+        String location = player.getWorld().getName() + "," + playerLocation.getX() + "," + playerLocation.getY() + "," + playerLocation.getZ();
         Item executable = utilities.getItemByName(executableItem);
         for(String command : executable.getCommands()) {
             command = command.replace("%player%", player.getName())
-                    .replace("%player_world%", player.getWorld().getName());
+                    .replace("%player_world%", player.getWorld().getName())
+                    .replace("%location%", location);
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
         }
 
