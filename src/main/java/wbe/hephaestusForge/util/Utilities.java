@@ -22,7 +22,11 @@ public class Utilities {
         }
 
         ExecutableItem executableItem = new ExecutableItem(item, name);
-        player.getInventory().addItem(executableItem);
+        if(player.getInventory().firstEmpty() == -1) {
+            player.getWorld().dropItem(player.getLocation(), executableItem);
+        } else {
+            player.getInventory().addItem(executableItem);
+        }
         player.updateInventory();
 
         player.sendMessage(HephaestusForge.messages.itemGivenPlayer
