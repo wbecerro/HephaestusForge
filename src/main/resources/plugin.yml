@@ -3,6 +3,7 @@ version: 1.0
 main: wbe.hephaestusForge.HephaestusForge
 api-version: 1.21
 author: wbe
+depend: [PlaceholderAPI]
 commands:
   HephaestusForge:
     description: HephaestusForge main command

@@ -1,5 +1,6 @@
 package wbe.hephaestusForge.listeners;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -66,6 +67,7 @@ public class PlayerInteractListeners implements Listener {
             command = command.replace("%player%", player.getName())
                     .replace("%player_world%", player.getWorld().getName())
                     .replace("%location%", location);
+            command = PlaceholderAPI.setPlaceholders(player, command);
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
         }
 
