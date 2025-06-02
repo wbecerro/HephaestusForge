@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HephaestusForge.iml" filepath="$PROJECT_DIR$/HephaestusForge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/HephaestusForge.iml" filepath="$PROJECT_DIR$/.idea/HephaestusForge.iml" />
     </modules>
   </component>
 </project>
