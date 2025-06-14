@@ -1,9 +1,9 @@
 package wbe.hephaestusForge;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import wbe.hephaestusForge.commads.CommandListener;
+import wbe.hephaestusForge.commads.TabListener;
 import wbe.hephaestusForge.config.Config;
 import wbe.hephaestusForge.config.Messages;
 import wbe.hephaestusForge.listeners.EventListeners;
@@ -15,6 +15,8 @@ public final class HephaestusForge extends JavaPlugin {
     private FileConfiguration configuration;
 
     private CommandListener commandListener;
+
+    private TabListener tabListener;
 
     private EventListeners eventListeners;
 
@@ -30,6 +32,8 @@ public final class HephaestusForge extends JavaPlugin {
 
         commandListener = new CommandListener();
         getCommand("hephaestusforge").setExecutor(this.commandListener);
+        tabListener = new TabListener();
+        getCommand("hephaestusforge").setTabCompleter(this.tabListener);
         eventListeners = new EventListeners();
         this.eventListeners.initializeListeners();
     }
