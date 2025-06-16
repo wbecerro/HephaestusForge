@@ -24,14 +24,12 @@ public class PlayerInteractListeners implements Listener {
 
     private Utilities utilities = new Utilities();
 
-    public PlayerInteractListeners() {
-
-    }
-
     @EventHandler(priority = EventPriority.NORMAL)
     public void executeItemOnInteract(PlayerInteractEvent event) {
         if(!event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-            return;
+            if(!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                return;
+            }
         }
 
         ItemStack item = event.getItem();
