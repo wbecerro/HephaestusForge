@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import wbe.hephaestusForge.HephaestusForge;
 import wbe.hephaestusForge.items.Item;
 import wbe.hephaestusForge.util.Utilities;
@@ -66,6 +67,20 @@ public class CommandListener implements CommandExecutor {
 
                 plugin.reloadConfiguration();
                 sender.sendMessage(HephaestusForge.messages.reload);
+            } else if(args[0].equalsIgnoreCase("addItem")) {
+                if(!sender.hasPermission("hephaestusforge.command.addItem")) {
+                    sender.sendMessage(HephaestusForge.messages.noPermission);
+                    return false;
+                }
+
+                ItemStack item = player.getInventory().getItemInMainHand();
+                String identifier = args[1];
+                boolean ok = utilities.addItem(item, identifier);
+                if(ok) {
+                    sender.sendMessage(HephaestusForge.messages.itemAdded);
+                } else {
+                    sender.sendMessage(HephaestusForge.messages.itemAlreadyExists.replace("%identfier%", identifier));
+                }
             }
         }
 

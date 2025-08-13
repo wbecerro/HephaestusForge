@@ -17,6 +17,8 @@ public class Messages {
     public String itemNotFound;
     public String itemUsed;
     public String reload;
+    public String itemAdded;
+    public String itemAlreadyExists;
     public List<String> help = new ArrayList<>();
 
     public Messages(FileConfiguration config) {
@@ -30,6 +32,8 @@ public class Messages {
         itemNotFound = config.getString("Messages.itemNotFound").replace("&", "§");
         itemUsed = config.getString("Messages.itemUsed").replace("&", "§");
         reload = config.getString("Messages.reload").replace("&", "§");
+        itemAdded = config.getString("Messages.itemAdded").replace("&", "§");
+        itemAlreadyExists = config.getString("Messages.itemAlreadyExists").replace("&", "§");
         help = config.getStringList("Messages.help");
     }
 }

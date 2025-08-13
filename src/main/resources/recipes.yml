@@ -1,0 +1,31 @@
+Recipes:
+  example:
+    result:
+      type: material
+      item: DRAGON_EGG
+    shape:
+      - "DOD"
+      - "ONO"
+      - "DOD"
+    ingredients:
+      D:
+        type: material
+        item: DIAMOND
+      O:
+        type: material
+        item: OBSIDIAN
+      N:
+        type: material
+        item: NETHER_STAR
+  example2:
+    result:
+      type: material
+      item: BEDROCK
+    shape:
+      - "OOO"
+      - "OOO"
+      - "OOO"
+    ingredients:
+      O:
+        type: material
+        item: OBSIDIAN

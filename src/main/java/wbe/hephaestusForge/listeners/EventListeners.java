@@ -11,5 +11,6 @@ public class EventListeners {
         PluginManager pluginManager = plugin.getServer().getPluginManager();
 
         pluginManager.registerEvents(new PlayerInteractListeners(), plugin);
+        pluginManager.registerEvents(new PlayerJoinListeners(), plugin);
     }
 }

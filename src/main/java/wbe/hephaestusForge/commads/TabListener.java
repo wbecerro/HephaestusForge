@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TabListener implements TabCompleter {
 
-    private final List<String> subCommands = Arrays.asList("help", "give", "reload");
+    private final List<String> subCommands = Arrays.asList("help", "give", "addItem", "reload");
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
@@ -41,6 +41,9 @@ public class TabListener implements TabCompleter {
                             completions.add(item);
                         }
                     }
+                    break;
+                case "additem":
+                    completions.add("<Identificador>");
                     break;
             }
         }
