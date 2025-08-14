@@ -18,6 +18,54 @@ Messages:
     - "&b"
     - "&eLeyenda: &b<> &eObligatorio  &b[] &eOpcional"
 
+Wandering:
+  chance: 2
+  villager:
+    name: "&f&lMercader olímpico"
+    glow: true
+  trades:
+    example:
+      weight: 1
+      maxUses: 1
+      result:
+        type: material
+        item: BEDROCK
+        amount: 1
+      ingredients:
+        1:
+          type: material
+          item: NETHER_STAR
+          amount: 4
+        2:
+          type: material
+          item: OBSIDIAN
+          amount: 8
+
+Piglin:
+  vanillaPiglinWeight: 459
+  interestItems:
+    - EMERALD
+    - LAPIS_LAZULI
+    - DIAMOND
+    - QUARTZ
+    - AMETHYST_SHARD
+    - COPPER_INGOT
+    - IRON_INGOT
+    - NETHERITE_INGOT
+    - ECHO_SHARD
+    - RESIN_CLUMP
+  trades:
+    example:
+      weight: 200
+      type: material
+      item: BEDROCK
+      amount: 4
+    example2:
+      weight: 250
+      type: material
+      item: DRAGON_EGG
+      amount: 2
+
 Items:
   example:
     material: STONE

@@ -4,10 +4,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import wbe.hephaestusForge.HephaestusForge;
+import wbe.hephaestusForge.config.PiglinTrade;
+import wbe.hephaestusForge.config.WanderingRecipe;
 import wbe.hephaestusForge.items.ExecutableItem;
 import wbe.hephaestusForge.items.Item;
 
 import java.io.IOException;
+import java.util.Random;
+import java.util.Set;
 
 public class Utilities {
 
@@ -50,5 +54,37 @@ public class Utilities {
         } catch(IOException e) {
             throw new RuntimeException("Error while trying to save the items file.");
         }
+    }
+
+    public WanderingRecipe getRandomRecipe() {
+        Random random = new Random();
+        double randomNumber = random.nextDouble(HephaestusForge.config.wanderingRecipesMaxWeight);
+        double weight = 0;
+        Set<WanderingRecipe> recipes = HephaestusForge.config.wanderingRecipes;
+
+        for(WanderingRecipe recipe : recipes) {
+            weight += recipe.getWeight();
+            if(randomNumber < weight) {
+                return recipe;
+            }
+        }
+
+        return recipes.stream().toList().getLast();
+    }
+
+    public PiglinTrade getRandomTrade() {
+        Random random = new Random();
+        double randomNumber = random.nextDouble(HephaestusForge.config.piglinTotalWeight);
+        double weight = 0;
+        Set<PiglinTrade> trades = HephaestusForge.config.piglinTrades;
+
+        for(PiglinTrade trade : trades) {
+            weight += trade.getWeight();
+            if(randomNumber < weight) {
+                return trade;
+            }
+        }
+
+        return trades.stream().toList().getLast();
     }
 }

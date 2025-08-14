@@ -12,5 +12,7 @@ public class EventListeners {
 
         pluginManager.registerEvents(new PlayerInteractListeners(), plugin);
         pluginManager.registerEvents(new PlayerJoinListeners(), plugin);
+        pluginManager.registerEvents(new CreatureSpawnListeners(), plugin);
+        pluginManager.registerEvents(new PiglinBarterListeners(), plugin);
     }
 }
