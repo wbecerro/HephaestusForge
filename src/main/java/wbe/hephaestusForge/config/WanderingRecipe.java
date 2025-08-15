@@ -77,7 +77,9 @@ public class WanderingRecipe {
     public MerchantRecipe createRecipe() {
         MerchantRecipe recipe = new MerchantRecipe(result, maxUses);
         recipe.addIngredient(ingredient1);
-        recipe.addIngredient(ingredient2);
+        if(ingredient2 != null) {
+            recipe.addIngredient(ingredient2);
+        }
         recipe.setExperienceReward(true);
 
         return recipe;

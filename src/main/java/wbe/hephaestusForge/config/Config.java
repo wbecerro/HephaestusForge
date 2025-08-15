@@ -1,5 +1,6 @@
 package wbe.hephaestusForge.config;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,6 +16,7 @@ public class Config {
     private FileConfiguration itemsConfig;
 
     public double wanderingChance;
+    public int maxExtraTrades;
     public String wanderingName;
     public boolean wanderingGlow;
 
@@ -36,6 +38,7 @@ public class Config {
         this.itemsConfig = itemsConfig;
 
         wanderingChance = config.getDouble("Wandering.chance");
+        maxExtraTrades = config.getInt("Wandering.maxExtraTrades");
         wanderingName = config.getString("Wandering.villager.name").replace("&", "§");
         wanderingGlow = config.getBoolean("Wandering.villager.glow");
 
@@ -83,7 +86,10 @@ public class Config {
             int maxUses = config.getInt("Wandering.trades." + recipe + ".maxUses");
             ItemStack result = parseItem("Wandering.trades." + recipe + ".result");
             ItemStack ingredient1 = parseItem("Wandering.trades." + recipe + ".ingredients.1");
-            ItemStack ingredient2 = parseItem("Wandering.trades." + recipe + ".ingredients.2");
+            ItemStack ingredient2 = null;
+            if(config.contains("Wandering.trades." + recipe + ".ingredients.2")) {
+                ingredient2 = parseItem("Wandering.trades." + recipe + ".ingredients.2");
+            }
             wanderingRecipes.add(new WanderingRecipe(recipe, maxUses, weight, result, ingredient1, ingredient2));
         }
     }

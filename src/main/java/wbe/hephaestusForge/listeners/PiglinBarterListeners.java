@@ -15,7 +15,7 @@ public class PiglinBarterListeners implements Listener {
 
     private Utilities utilities = new Utilities();
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void handleCustomPiglinBarter(PiglinBarterEvent event) {
         if(event.isCancelled()) {
             return;
@@ -29,6 +29,6 @@ public class PiglinBarterListeners implements Listener {
 
         List<ItemStack> outcome = event.getOutcome();
         outcome.clear();
-        outcome.add(utilities.getRandomTrade().getItem());
+        outcome.add(utilities.getRandomTrade().getItem().clone());
     }
 }

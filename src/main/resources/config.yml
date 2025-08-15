@@ -20,6 +20,7 @@ Messages:
 
 Wandering:
   chance: 2
+  maxExtraTrades: 3
   villager:
     name: "&f&lMercader olímpico"
     glow: true

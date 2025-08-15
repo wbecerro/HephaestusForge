@@ -43,9 +43,16 @@ public class CreatureSpawnListeners implements Listener {
         wanderingTrader.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, PotionEffect.INFINITE_DURATION, 1));
 
         List<MerchantRecipe> recipes = new ArrayList<>(wanderingTrader.getRecipes());
-        WanderingRecipe recipe = utilities.getRandomRecipe();
+        int newTrades = random.nextInt(1, HephaestusForge.config.maxExtraTrades + 1);
+        for(int i=0;i<newTrades;i++) {
+            WanderingRecipe recipe = utilities.getRandomRecipe();
+            if(recipes.contains(recipe.createRecipe())) {
+                continue;
+            }
 
-        recipes.add(recipe.createRecipe());
+            recipes.add(recipe.createRecipe());
+        }
+
         wanderingTrader.setRecipes(recipes);
     }
 
