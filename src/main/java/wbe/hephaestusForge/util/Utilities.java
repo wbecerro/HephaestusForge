@@ -1,9 +1,12 @@
 package wbe.hephaestusForge.util;
 
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.loot.LootTables;
 import wbe.hephaestusForge.HephaestusForge;
+import wbe.hephaestusForge.config.LootTableItem;
 import wbe.hephaestusForge.config.PiglinTrade;
 import wbe.hephaestusForge.config.WanderingRecipe;
 import wbe.hephaestusForge.items.ExecutableItem;
@@ -86,5 +89,15 @@ public class Utilities {
         }
 
         return trades.stream().toList().getLast();
+    }
+
+    public Set<LootTableItem> getLootTableItems(NamespacedKey key) {
+        for(LootTables lootTable : HephaestusForge.config.lootTables.keySet()) {
+            if(lootTable.getKey().equals(key)) {
+                return HephaestusForge.config.lootTables.get(lootTable);
+            }
+        }
+
+        return null;
     }
 }

@@ -5,6 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
+import org.bukkit.block.Container;
+import org.bukkit.block.TileState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,10 +16,14 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.loot.Lootable;
 import org.bukkit.persistence.PersistentDataType;
 import wbe.hephaestusForge.HephaestusForge;
+import wbe.hephaestusForge.config.LootTableItem;
 import wbe.hephaestusForge.items.Item;
 import wbe.hephaestusForge.util.Utilities;
+
+import java.util.Set;
 
 public class PlayerInteractListeners implements Listener {
 
@@ -72,5 +79,28 @@ public class PlayerInteractListeners implements Listener {
         item.setAmount(item.getAmount() - 1);
         player.sendMessage(HephaestusForge.messages.itemUsed);
         event.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    private void handleChestLootGeneration(PlayerInteractEvent event) {
+        if(!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            return;
+        }
+
+        Block block = event.getClickedBlock();
+        if(block == null) {
+            return;
+        }
+
+        if(block.getState() instanceof Lootable lootable) {
+            if(lootable.getLootTable() != null) {
+                Set<LootTableItem> extraLoot = utilities.getLootTableItems(lootable.getLootTable().getKey());
+                if(extraLoot == null) {
+                    return;
+                }
+
+                LootGenerateListeners.pendingLoot.put(block.getLocation(), event.getPlayer().getUniqueId());
+            }
+        }
     }
 }

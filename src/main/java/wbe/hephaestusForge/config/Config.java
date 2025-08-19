@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.loot.LootTables;
 import wbe.hephaestusForge.items.Item;
 
 import java.util.*;
@@ -24,11 +25,15 @@ public class Config {
     public List<Material> interestItems = new ArrayList<>();
     public Set<PiglinTrade> piglinTrades = new HashSet<>();
 
+    public double luckLevelMultiplier;
+
     public HashMap<String, Item> items = new HashMap<>();
 
     public HashMap<String, ItemStack> savedItems = new HashMap<>();
 
     public Set<WanderingRecipe> wanderingRecipes = new HashSet<>();
+
+    public HashMap<LootTables, Set<LootTableItem>> lootTables = new HashMap<>();
 
     public int wanderingRecipesMaxWeight = 0;
     public int piglinTotalWeight = 0;
@@ -47,10 +52,13 @@ public class Config {
             interestItems.add(Material.valueOf(material));
         });
 
+        luckLevelMultiplier = config.getDouble("LuckLevelMultiplier");
+
         loadExecutableItems();
         loadSavedItems();
         loadWanderingRecipes();
         loadPiglinTrades();
+        loadLootTables();
     }
 
     private void loadExecutableItems() {
@@ -104,10 +112,35 @@ public class Config {
         }
     }
 
+    private void loadLootTables() {
+        Set<String> configLootTables = config.getConfigurationSection("LootTables").getKeys(false);
+        for(String lootTable : configLootTables) {
+            lootTables.put(LootTables.valueOf(lootTable), loadLootTableItems(lootTable));
+        }
+    }
+
+    private Set<LootTableItem> loadLootTableItems(String lootTable) {
+        Set<String> items = config.getConfigurationSection("LootTables." + lootTable).getKeys(false);
+        Set<LootTableItem> lootTableItems = new HashSet<>();
+        for(String lootTableItem : items) {
+            double chance = config.getDouble("LootTables." + lootTable + "." + lootTableItem + ".chance");
+            ItemStack item = parseItem("LootTables." + lootTable + "." + lootTableItem);
+            int min = config.getInt("LootTables." + lootTable + "." + lootTableItem + ".min");
+            int max = config.getInt("LootTables." + lootTable + "." + lootTableItem + ".max");
+            lootTableItems.add(new LootTableItem(lootTableItem, chance, item, min, max));
+        }
+
+        return lootTableItems;
+    }
+
     private ItemStack parseItem(String path) {
         String type = config.getString(path + ".type");
         String material = config.getString(path + ".item");
-        int amount = config.getInt(path + ".amount");
+        int amount = 1;
+        if(config.contains(path + ".amount")) {
+            amount = config.getInt(path + ".amount");
+        }
+
         if(type.equalsIgnoreCase("material")) {
             return new ItemStack(Material.valueOf(material), amount);
         } else {

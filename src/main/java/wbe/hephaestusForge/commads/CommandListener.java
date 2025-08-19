@@ -79,7 +79,7 @@ public class CommandListener implements CommandExecutor {
                 if(ok) {
                     sender.sendMessage(HephaestusForge.messages.itemAdded);
                 } else {
-                    sender.sendMessage(HephaestusForge.messages.itemAlreadyExists.replace("%identfier%", identifier));
+                    sender.sendMessage(HephaestusForge.messages.itemAlreadyExists.replace("%identifier%", identifier));
                 }
             }
         }

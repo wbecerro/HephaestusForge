@@ -67,6 +67,37 @@ Piglin:
       item: DRAGON_EGG
       amount: 2
 
+# https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/loot/LootTables.html
+LuckLevelMultiplier: 0.5
+LootTables:
+  BURIED_TREASURE:
+    example:
+      chance: 0.1
+      type: material
+      item: DRAGON_EGG
+      min: 1
+      max: 1
+    example2:
+      chance: 1
+      type: material
+      item: DIAMOND
+      min: 1
+      max: 2
+  END_CITY_TREASURE:
+    example:
+      chance: 0.5
+      type: material
+      item: ELYTRA
+      min: 1
+      max: 1
+  DESERT_PYRAMID:
+    example:
+      chance: 50
+      type: material
+      item: BEDROCK
+      min: 1
+      max: 5
+
 Items:
   example:
     material: STONE
