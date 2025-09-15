@@ -1,8 +1,10 @@
 Recipes:
   example:
+    type: shaped
     result:
       type: material
       item: DRAGON_EGG
+      amount: 1
     shape:
       - "DOD"
       - "ONO"
@@ -18,14 +20,17 @@ Recipes:
         type: material
         item: NETHER_STAR
   example2:
+    type: shapeless
     result:
       type: material
       item: BEDROCK
-    shape:
-      - "OOO"
-      - "OOO"
-      - "OOO"
+      amount: 1
     ingredients:
-      O:
+      obsidian:
         type: material
         item: OBSIDIAN
+        amount: 8
+      netherStar:
+        type: material
+        item: NETHER_STAR
+        amount: 1
