@@ -8,11 +8,14 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.block.TileState;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -100,6 +103,31 @@ public class PlayerInteractListeners implements Listener {
                 }
 
                 LootGenerateListeners.pendingLoot.put(block.getLocation(), event.getPlayer().getUniqueId());
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    LootGenerateListeners.pendingLoot.remove(block.getLocation());
+                }, 50L);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    private void handleEntityChestLootGeneration(PlayerInteractEntityEvent event) {
+        if(event.isCancelled()) {
+            return;
+        }
+
+        Entity entity = event.getRightClicked();
+        if(entity instanceof Lootable lootable) {
+            if(lootable.getLootTable() != null) {
+                Set<LootTableItem> extraLoot = utilities.getLootTableItems(lootable.getLootTable().getKey());
+                if(extraLoot == null) {
+                    return;
+                }
+
+                LootGenerateListeners.pendingLoot.put(entity.getLocation(), event.getPlayer().getUniqueId());
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    LootGenerateListeners.pendingLoot.remove(entity.getLocation());
+                }, 50L);
             }
         }
     }
