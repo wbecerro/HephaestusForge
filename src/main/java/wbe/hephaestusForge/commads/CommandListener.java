@@ -1,13 +1,17 @@
 package wbe.hephaestusForge.commads;
 
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.CraftingRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import wbe.hephaestusForge.HephaestusForge;
 import wbe.hephaestusForge.items.Item;
+import wbe.hephaestusForge.listeners.MenuListeners;
 import wbe.hephaestusForge.util.Utilities;
 
 public class CommandListener implements CommandExecutor {
@@ -80,6 +84,26 @@ public class CommandListener implements CommandExecutor {
                     sender.sendMessage(HephaestusForge.messages.itemAdded);
                 } else {
                     sender.sendMessage(HephaestusForge.messages.itemAlreadyExists.replace("%identifier%", identifier));
+                }
+            } else if(args[0].equalsIgnoreCase("recipe")) {
+                if(!sender.hasPermission("hephaestusforge.command.recipe")) {
+                    sender.sendMessage(HephaestusForge.messages.noPermission);
+                    return false;
+                }
+
+                String namespace = args[1];
+                String recipe = args[2];
+                NamespacedKey recipeKey = new NamespacedKey(namespace, recipe);
+                Recipe finalRecipe = utilities.getRecipe(recipeKey);
+                if(finalRecipe instanceof CraftingRecipe craftingRecipe) {
+                    try {
+                        MenuListeners.openMenu(player, craftingRecipe);
+                    } catch(Exception ex) {
+                        sender.sendMessage(ex.getMessage());
+                        ex.printStackTrace();
+                    }
+                } else {
+                    sender.sendMessage(HephaestusForge.messages.recipeNotSupported);
                 }
             }
         }

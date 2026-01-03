@@ -19,6 +19,7 @@ public class Messages {
     public String reload;
     public String itemAdded;
     public String itemAlreadyExists;
+    public String recipeNotSupported;
     public List<String> help = new ArrayList<>();
 
     public Messages(FileConfiguration config) {
@@ -34,6 +35,7 @@ public class Messages {
         reload = config.getString("Messages.reload").replace("&", "§");
         itemAdded = config.getString("Messages.itemAdded").replace("&", "§");
         itemAlreadyExists = config.getString("Messages.itemAlreadyExists").replace("&", "§");
+        recipeNotSupported = config.getString("Messages.recipeNotSupported").replace("&", "§");
         help = config.getStringList("Messages.help");
     }
 }

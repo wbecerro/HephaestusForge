@@ -1,21 +1,23 @@
 package wbe.hephaestusForge.commads;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.CraftingRecipe;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.util.StringUtil;
 import wbe.hephaestusForge.HephaestusForge;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class TabListener implements TabCompleter {
 
-    private final List<String> subCommands = Arrays.asList("help", "give", "addItem", "reload");
+    private final List<String> subCommands = Arrays.asList("help", "give", "addItem", "recipe", "reload");
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
@@ -45,6 +47,12 @@ public class TabListener implements TabCompleter {
                 case "additem":
                     completions.add("<Identificador>");
                     break;
+                case "recipe":
+                    completions.add("<Ámbito>");
+                    completions.add("minecraft");
+                    completions.add("hephaestusforge");
+                    completions.add("rareproperties");
+                    break;
             }
         }
 
@@ -58,6 +66,17 @@ public class TabListener implements TabCompleter {
                         } else if(player.getName().startsWith(args[2])) {
                             completions.add(player.getName());
                         }
+                    }
+                    break;
+                case "recipe":
+                    Iterator<Recipe> recipes = Bukkit.recipeIterator();
+                    while(recipes.hasNext()) {
+                        Recipe recipe = recipes.next();
+                        if(!(recipe instanceof CraftingRecipe craftingRecipe)) {
+                            continue;
+                        }
+
+                        completions.add(craftingRecipe.getKey().getKey());
                     }
                     break;
             }

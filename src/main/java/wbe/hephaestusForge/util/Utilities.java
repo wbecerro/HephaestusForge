@@ -1,9 +1,12 @@
 package wbe.hephaestusForge.util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.CraftingRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.loot.LootTables;
 import wbe.hephaestusForge.HephaestusForge;
 import wbe.hephaestusForge.config.LootTableItem;
@@ -99,5 +102,9 @@ public class Utilities {
         }
 
         return null;
+    }
+
+    public Recipe getRecipe(NamespacedKey key) {
+        return Bukkit.getServer().getRecipe(key);
     }
 }

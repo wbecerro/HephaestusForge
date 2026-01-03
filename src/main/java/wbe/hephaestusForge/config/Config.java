@@ -1,11 +1,13 @@
 package wbe.hephaestusForge.config;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.loot.LootTables;
+import org.bukkit.persistence.PersistentDataType;
 import wbe.hephaestusForge.items.Item;
 
 import java.util.*;
@@ -15,6 +17,13 @@ public class Config {
     private FileConfiguration config;
 
     private FileConfiguration itemsConfig;
+
+    public String menuTitle;
+    public Material menuBorderMaterial;
+    public ItemStack menuResultItem;
+    public ItemStack menuGoBackItem;
+    public String menuGoBackCommand;
+    public ItemStack menuCloseItem;
 
     public double wanderingChance;
     public int maxExtraTrades;
@@ -41,6 +50,35 @@ public class Config {
     public Config(FileConfiguration config, FileConfiguration itemsConfig) {
         this.config = config;
         this.itemsConfig = itemsConfig;
+
+        menuTitle = config.getString("Menu.title").replace("&", "§");
+        menuBorderMaterial = Material.valueOf(config.getString("Menu.borderMaterial"));
+
+        String resultName = config.getString("Menu.resultItem.name").replace("&", "§");
+        Material resultMaterial = Material.valueOf(config.getString("Menu.resultItem.material"));
+        menuResultItem = new ItemStack(resultMaterial);
+        ItemMeta resultMeta = menuResultItem.getItemMeta();
+        resultMeta.setDisplayName(resultName);
+        menuResultItem.setItemMeta(resultMeta);
+
+        String goBackName = config.getString("Menu.goBackItem.name").replace("&", "§");
+        Material goBackMaterial = Material.valueOf(config.getString("Menu.goBackItem.material"));
+        menuGoBackItem = new ItemStack(goBackMaterial);
+        ItemMeta goBackMeta = menuGoBackItem.getItemMeta();
+        goBackMeta.setDisplayName(goBackName);
+        NamespacedKey goBackKey = new NamespacedKey("hephaestusforge", "goback");
+        goBackMeta.getPersistentDataContainer().set(goBackKey, PersistentDataType.BOOLEAN, true);
+        menuGoBackItem.setItemMeta(goBackMeta);
+        menuGoBackCommand = config.getString("Menu.goBackItem.command");
+
+        String closeName = config.getString("Menu.closeItem.name").replace("&", "§");
+        Material closeMaterial = Material.valueOf(config.getString("Menu.closeItem.material"));
+        menuCloseItem = new ItemStack(closeMaterial);
+        ItemMeta closeMeta = menuCloseItem.getItemMeta();
+        closeMeta.setDisplayName(closeName);
+        NamespacedKey closeKey = new NamespacedKey("hephaestusforge", "close");
+        closeMeta.getPersistentDataContainer().set(closeKey, PersistentDataType.BOOLEAN, true);
+        menuCloseItem.setItemMeta(closeMeta);
 
         wanderingChance = config.getDouble("Wandering.chance");
         maxExtraTrades = config.getInt("Wandering.maxExtraTrades");

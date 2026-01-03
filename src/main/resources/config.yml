@@ -9,14 +9,30 @@ Messages:
   itemAdded: '&b[&cForja&b] &eObjeto añadido con éxito.'
   itemAlreadyExists: '&b[&cForja&b] &eEl objeto con el identificador %identifier% ya existe.'
   reload: '&b[&cForja&b] &eSe ha recargado la configuración del plugin.'
+  recipeNotSupported: '&b[&cForja&b] &eEsa receta no está soportada.'
   help:
     - "&d-===- &c[Forja] &d-===-"
     - "&b/hephaestusforge &eMuestra esta página."
     - "&b/hephaestusforge give <Objeto> [Jugador] &eDa un objeto a un jugador."
     - "&b/hephaestusforge addItem <Identificador> &eAñade un objeto al archivo de objetos."
+    - "&b/hephaestusforge recipe <Ámbito> <Receta> &eMuestra un menú con la receta seleccionada."
     - "&b/hephaestusforge reload &eRecarga el plugin."
     - "&b"
     - "&eLeyenda: &b<> &eObligatorio  &b[] &eOpcional"
+
+Menu:
+  title: "&8Receta de %item%"
+  borderMaterial: BLACK_STAINED_GLASS_PANE
+  resultItem:
+    material: MAGENTA_GLAZED_TERRACOTTA
+    name: "&e&lResultado ->"
+  goBackItem:
+    material: ARROW
+    name: "&cVolver"
+    command: "menurecetas"
+  closeItem:
+    material: BARRIER
+    name: "&cCerrar"
 
 Wandering:
   chance: 2
