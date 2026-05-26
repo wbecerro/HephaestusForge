@@ -34,3 +34,14 @@ Recipes:
         type: material
         item: NETHER_STAR
         amount: 1
+  example3:
+    type: furnace
+    exp: 6.3
+    time: 80
+    result:
+      type: material
+      item: IRON_INGOT
+      amount: 9
+    input:
+      type: material
+      item: RAW_IRON_BLOCK

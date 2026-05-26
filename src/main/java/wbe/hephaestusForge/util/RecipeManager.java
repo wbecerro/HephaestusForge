@@ -3,10 +3,7 @@ package wbe.hephaestusForge.util;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.*;
 import wbe.hephaestusForge.HephaestusForge;
 
 import java.util.*;
@@ -60,6 +57,27 @@ public class RecipeManager {
         keys.add(recipeKey);
     }
 
+    public void loadFurnaceRecipe(String id, ItemStack input, float exp, int time) {
+        NamespacedKey recipeKey = new NamespacedKey(plugin, id + "recipe");
+        FurnaceRecipe recipe = new FurnaceRecipe(recipeKey, getResult(id), new RecipeChoice.ExactChoice(input), exp, time);
+        plugin.getServer().addRecipe(recipe);
+        keys.add(recipeKey);
+    }
+
+    public void loadBlastingRecipe(String id, ItemStack input, float exp, int time) {
+        NamespacedKey recipeKey = new NamespacedKey(plugin, id + "recipe");
+        BlastingRecipe recipe = new BlastingRecipe(recipeKey, getResult(id), new RecipeChoice.ExactChoice(input), exp, time);
+        plugin.getServer().addRecipe(recipe);
+        keys.add(recipeKey);
+    }
+
+    public void loadSmokingRecipe(String id, ItemStack input, float exp, int time) {
+        NamespacedKey recipeKey = new NamespacedKey(plugin, id + "recipe");
+        SmokingRecipe recipe = new SmokingRecipe(recipeKey, getResult(id), new RecipeChoice.ExactChoice(input), exp, time);
+        plugin.getServer().addRecipe(recipe);
+        keys.add(recipeKey);
+    }
+
     private ItemStack getResult(String id) {
         String type = recipeConfig.getString("Recipes." + id + ".result.type");
         String material = recipeConfig.getString("Recipes." + id + ".result.item");
@@ -77,8 +95,8 @@ public class RecipeManager {
         Set<String> configRecipes = recipeConfig.getConfigurationSection("Recipes").getKeys(false);
         for(String recipe : configRecipes) {
             String id = recipe;
-            String shapeType = recipeConfig.getString("Recipes." + recipe + ".type");
-            if(shapeType.equalsIgnoreCase("shaped")) {
+            String recipeType = recipeConfig.getString("Recipes." + recipe + ".type");
+            if(recipeType.equalsIgnoreCase("shaped")) {
                 String[] shape = recipeConfig.getStringList("Recipes." + recipe + ".shape").toArray(new String[3]);
                 HashMap<Character, ItemStack> ingredients = new HashMap<>();
                 Set<String> configIngredients = recipeConfig.getConfigurationSection("Recipes." + recipe + ".ingredients").getKeys(false);
@@ -93,7 +111,7 @@ public class RecipeManager {
                 }
 
                 loadShapedRecipe(id, shape, ingredients);
-            } else if(shapeType.equalsIgnoreCase("shapeless")) {
+            } else if(recipeType.equalsIgnoreCase("shapeless")) {
                 HashMap<ItemStack, Integer> ingredients = new HashMap<>();
                 Set<String> configIngredients = recipeConfig.getConfigurationSection("Recipes." + recipe + ".ingredients").getKeys(false);
                 for(String ingredient : configIngredients) {
@@ -108,6 +126,45 @@ public class RecipeManager {
                 }
 
                 loadShapelessRecipe(id, ingredients);
+            } else if(recipeType.equalsIgnoreCase("furnace")) {
+                String material = recipeConfig.getString("Recipes." + recipe + ".input.item");
+                String type = recipeConfig.getString("Recipes." + recipe + ".input.type");
+                float exp = (float) recipeConfig.getDouble("Recipes." + recipe + ".exp");
+                int time = recipeConfig.getInt("Recipes." + recipe + ".time") * 20;
+                ItemStack input = null;
+                if(type.equalsIgnoreCase("material")) {
+                    input = new ItemStack(Material.valueOf(material));
+                } else if(type.equalsIgnoreCase("item")) {
+                    input = HephaestusForge.config.savedItems.get(material);
+                }
+
+                loadFurnaceRecipe(id, input, exp, time);
+            } else if(recipeType.equalsIgnoreCase("blastFurnace")) {
+                String material = recipeConfig.getString("Recipes." + recipe + ".input.item");
+                String type = recipeConfig.getString("Recipes." + recipe + ".input.type");
+                float exp = (float) recipeConfig.getDouble("Recipes." + recipe + ".exp");
+                int time = recipeConfig.getInt("Recipes." + recipe + ".time") * 20;
+                ItemStack input = null;
+                if(type.equalsIgnoreCase("material")) {
+                    input = new ItemStack(Material.valueOf(material));
+                } else if(type.equalsIgnoreCase("item")) {
+                    input = HephaestusForge.config.savedItems.get(material);
+                }
+
+                loadBlastingRecipe(id, input, exp, time);
+            } else if(recipeType.equalsIgnoreCase("smoker")) {
+                String material = recipeConfig.getString("Recipes." + recipe + ".input.item");
+                String type = recipeConfig.getString("Recipes." + recipe + ".input.type");
+                float exp = (float) recipeConfig.getDouble("Recipes." + recipe + ".exp");
+                int time = recipeConfig.getInt("Recipes." + recipe + ".time") * 20;
+                ItemStack input = null;
+                if(type.equalsIgnoreCase("material")) {
+                    input = new ItemStack(Material.valueOf(material));
+                } else if(type.equalsIgnoreCase("item")) {
+                    input = HephaestusForge.config.savedItems.get(material);
+                }
+
+                loadSmokingRecipe(id, input, exp, time);
             }
         }
     }

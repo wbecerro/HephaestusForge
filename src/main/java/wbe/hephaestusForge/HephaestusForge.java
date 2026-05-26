@@ -39,7 +39,6 @@ public final class HephaestusForge extends JavaPlugin {
         saveDefaultConfig();
         createItemsFile();
         createRecipesFile();
-        getLogger().info("Hephaestus' Forge enabled correctly.");
         reloadConfiguration();
         recipeManager = new RecipeManager(this, recipesConfig);
 
@@ -50,6 +49,7 @@ public final class HephaestusForge extends JavaPlugin {
         getCommand("hephaestusforge").setTabCompleter(this.tabListener);
         eventListeners = new EventListeners();
         this.eventListeners.initializeListeners();
+        getLogger().info("Hephaestus' Forge enabled correctly.");
     }
 
     @Override

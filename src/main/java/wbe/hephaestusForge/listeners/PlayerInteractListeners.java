@@ -74,7 +74,10 @@ public class PlayerInteractListeners implements Listener {
         for(String command : executable.getCommands()) {
             command = command.replace("%player%", player.getName())
                     .replace("%player_world%", player.getWorld().getName())
-                    .replace("%location%", location);
+                    .replace("%location%", location)
+                    .replace("%x%", String.valueOf(playerLocation.getX()))
+                    .replace("%y%", String.valueOf(playerLocation.getY()))
+                    .replace("%z%", String.valueOf(playerLocation.getZ()));
             command = PlaceholderAPI.setPlaceholders(player, command);
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
         }

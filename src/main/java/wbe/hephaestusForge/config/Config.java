@@ -51,6 +51,8 @@ public class Config {
         this.config = config;
         this.itemsConfig = itemsConfig;
 
+        loadSavedItems();
+
         menuTitle = config.getString("Menu.title").replace("&", "§");
         menuBorderMaterial = Material.valueOf(config.getString("Menu.borderMaterial"));
 
@@ -93,7 +95,6 @@ public class Config {
         luckLevelMultiplier = config.getDouble("LuckLevelMultiplier");
 
         loadExecutableItems();
-        loadSavedItems();
         loadWanderingRecipes();
         loadPiglinTrades();
         loadLootTables();
