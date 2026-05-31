@@ -79,7 +79,7 @@ public class CommandListener implements CommandExecutor {
 
                 ItemStack item = player.getInventory().getItemInMainHand();
                 String identifier = args[1];
-                boolean ok = utilities.addItem(item, identifier);
+                boolean ok = utilities.addItem(new ItemStack(item), identifier);
                 if(ok) {
                     sender.sendMessage(HephaestusForge.messages.itemAdded);
                 } else {
