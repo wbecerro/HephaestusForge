@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class MenuListeners implements Listener {
 
-    private static void fillBorders(Inventory inventory) {
+    private static void fillBordersCrafting(Inventory inventory) {
         ItemStack borde = new ItemStack(HephaestusForge.config.menuBorderMaterial);
         ItemMeta bordeMeta = borde.getItemMeta();
         NamespacedKey currentPage = new NamespacedKey(HephaestusForge.getInstance(), "recipemenu");
@@ -36,7 +36,23 @@ public class MenuListeners implements Listener {
         }
     }
 
+    private static void fillBordersCooking(Inventory inventory) {
+        ItemStack borde = new ItemStack(HephaestusForge.config.menuBorderMaterial);
+        ItemMeta bordeMeta = borde.getItemMeta();
+        NamespacedKey currentPage = new NamespacedKey(HephaestusForge.getInstance(), "recipemenu");
+        bordeMeta.setDisplayName(" ");
+        bordeMeta.getPersistentDataContainer().set(currentPage, PersistentDataType.BOOLEAN, true);
+        borde.setItemMeta(bordeMeta);
+        List<Integer> slots = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24,
+                26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 50, 51, 52, 53);
+
+        for(int slot : slots) {
+            inventory.setItem(slot, borde);
+        }
+    }
+
     public static void fillShapedRecipe(Inventory inventory, ShapedRecipe recipe) {
+        fillBordersCrafting(inventory);
         List<Integer> slots = Arrays.asList(10, 11, 12, 19, 20, 21, 28, 29, 30);
         String[] shape = recipe.getShape();
         Map<Character, ItemStack> ingredients = recipe.getIngredientMap();
@@ -54,8 +70,10 @@ public class MenuListeners implements Listener {
         }
 
         inventory.setItem(25, recipe.getResult());
+        inventory.setItem(23, HephaestusForge.config.menuResultItem);
     }
     public static void fillShapelessRecipe(Inventory inventory, ShapelessRecipe recipe) {
+        fillBordersCrafting(inventory);
         List<Integer> slots = Arrays.asList(10, 11, 12, 19, 20, 21, 28, 29, 30);
         List<ItemStack> ingredients = recipe.getIngredientList();
         int ingredientsSize = ingredients.size();
@@ -65,9 +83,62 @@ public class MenuListeners implements Listener {
         }
 
         inventory.setItem(25, recipe.getResult());
+        inventory.setItem(23, HephaestusForge.config.menuResultItem);
     }
 
-    public static void openMenu(Player player, CraftingRecipe recipe) throws Exception {
+    public static void fillFurnaceRecipe(Inventory inventory, FurnaceRecipe recipe) {
+        fillBordersCooking(inventory);
+        int slot = 20;
+        ItemStack ingredient = recipe.getInput();
+        inventory.setItem(slot, ingredient);
+
+        ItemStack result = recipe.getResult();
+        inventory.setItem(25, result);
+        ItemStack newResultItem = new ItemStack(HephaestusForge.config.menuResultItem);
+        newResultItem.setType(Material.FURNACE);
+        inventory.setItem(23, newResultItem);
+    }
+
+    public static void fillBlastFurnaceRecipe(Inventory inventory, BlastingRecipe recipe) {
+        fillBordersCooking(inventory);
+        int slot = 20;
+        ItemStack ingredient = recipe.getInput();
+        inventory.setItem(slot, ingredient);
+
+        ItemStack result = recipe.getResult();
+        inventory.setItem(25, result);
+        ItemStack newResultItem = new ItemStack(HephaestusForge.config.menuResultItem);
+        newResultItem.setType(Material.BLAST_FURNACE);
+        inventory.setItem(23, newResultItem);
+    }
+
+    public static void fillSmokerRecipe(Inventory inventory, SmokingRecipe recipe) {
+        fillBordersCooking(inventory);
+        int slot = 20;
+        ItemStack ingredient = recipe.getInput();
+        inventory.setItem(slot, ingredient);
+
+        ItemStack result = recipe.getResult();
+        inventory.setItem(25, result);
+        ItemStack newResultItem = new ItemStack(HephaestusForge.config.menuResultItem);
+        newResultItem.setType(Material.SMOKER);
+        inventory.setItem(23, newResultItem);
+    }
+
+    public static void fillCampfireRecipe(Inventory inventory, CampfireRecipe recipe) {
+        fillBordersCooking(inventory);
+        int slot = 20;
+        ItemStack ingredient = recipe.getInput();
+        inventory.setItem(slot, ingredient);
+
+        ItemStack result = recipe.getResult();
+        inventory.setItem(25, result);
+        ItemStack newResultItem = new ItemStack(HephaestusForge.config.menuResultItem);
+        newResultItem.setType(Material.CAMPFIRE);
+        inventory.setItem(23, newResultItem);
+    }
+
+    public static void openMenu(Player player, Recipe recipe, int page) throws Exception {
         String name = "";
         ItemStack result = recipe.getResult();
         if(result.getItemMeta() == null) {
@@ -80,22 +151,35 @@ public class MenuListeners implements Listener {
         }
         Inventory inventory = Bukkit.createInventory(null, 54, HephaestusForge.config.menuTitle
                 .replace("%item%", name));
-        fillBorders(inventory);
         if(recipe instanceof ShapedRecipe shapedRecipe) {
             fillShapedRecipe(inventory, shapedRecipe);
         } else if(recipe instanceof ShapelessRecipe shapelessRecipe) {
             fillShapelessRecipe(inventory, shapelessRecipe);
+        } else if(recipe instanceof FurnaceRecipe furnaceRecipe) {
+            fillFurnaceRecipe(inventory, furnaceRecipe);
+        } else if(recipe instanceof BlastingRecipe blastingRecipe) {
+            fillBlastFurnaceRecipe(inventory, blastingRecipe);
+        } else if(recipe instanceof SmokingRecipe smokingRecipe) {
+            fillSmokerRecipe(inventory, smokingRecipe);
+        } else if(recipe instanceof CampfireRecipe campfireRecipe) {
+            fillCampfireRecipe(inventory, campfireRecipe);
         } else {
             throw new Exception(HephaestusForge.messages.recipeNotSupported);
         }
-        inventory.setItem(23, HephaestusForge.config.menuResultItem);
-        inventory.setItem(48, HephaestusForge.config.menuGoBackItem);
+
+        NamespacedKey pageKey = new NamespacedKey(HephaestusForge.getInstance(), "page");
+        ItemStack goBack = new ItemStack(HephaestusForge.config.menuGoBackItem);
+        ItemMeta meta = goBack.getItemMeta();
+        meta.getPersistentDataContainer().set(pageKey, PersistentDataType.INTEGER, page);
+        goBack.setItemMeta(meta);
+
+        inventory.setItem(48, goBack);
         inventory.setItem(49, HephaestusForge.config.menuCloseItem);
 
         player.openInventory(inventory);
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent event) {
         ItemStack bordeItem = event.getInventory().getItem(0);
         if(bordeItem == null) {
@@ -122,7 +206,14 @@ public class MenuListeners implements Listener {
         // Clic en volver
         ItemMeta meta = item.getItemMeta();
         if(meta.getPersistentDataContainer().has(goBackKey)) {
-            player.performCommand(HephaestusForge.config.menuGoBackCommand);
+            NamespacedKey pageKey = new NamespacedKey(HephaestusForge.getInstance(), "page");
+            int page = meta.getPersistentDataContainer().get(pageKey, PersistentDataType.INTEGER);
+            String command = HephaestusForge.config.menuGoBackCommand;
+            if(page > 0) {
+                command += String.valueOf(page);
+            }
+
+            player.performCommand(command);
             event.setCancelled(true);
             return;
         }

@@ -93,17 +93,18 @@ public class CommandListener implements CommandExecutor {
 
                 String namespace = args[1];
                 String recipe = args[2];
+                int page = -1;
+                if(args.length > 3) {
+                    page = Integer.parseInt(args[3]);
+                }
+
                 NamespacedKey recipeKey = new NamespacedKey(namespace, recipe);
                 Recipe finalRecipe = utilities.getRecipe(recipeKey);
-                if(finalRecipe instanceof CraftingRecipe craftingRecipe) {
-                    try {
-                        MenuListeners.openMenu(player, craftingRecipe);
-                    } catch(Exception ex) {
-                        sender.sendMessage(ex.getMessage());
-                        ex.printStackTrace();
-                    }
-                } else {
-                    sender.sendMessage(HephaestusForge.messages.recipeNotSupported);
+                try {
+                    MenuListeners.openMenu(player, finalRecipe, page);
+                } catch(Exception ex) {
+                    sender.sendMessage(ex.getMessage());
+                    ex.printStackTrace();
                 }
             }
         }

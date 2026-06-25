@@ -33,6 +33,8 @@ public class ExecutableItem extends ItemStack {
         }
         meta.setLore(lore);
 
+        meta.setMaxStackSize(64);
+
         if(item.isGlow()) {
             meta.addEnchant(Enchantment.MENDING, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

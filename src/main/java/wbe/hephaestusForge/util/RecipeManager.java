@@ -78,6 +78,13 @@ public class RecipeManager {
         keys.add(recipeKey);
     }
 
+    public void loadCampfireRecipe(String id, ItemStack input, float exp, int time) {
+        NamespacedKey recipeKey = new NamespacedKey(plugin, id + "recipe");
+        CampfireRecipe recipe = new CampfireRecipe(recipeKey, getResult(id), new RecipeChoice.ExactChoice(input), exp, time);
+        plugin.getServer().addRecipe(recipe);
+        keys.add(recipeKey);
+    }
+
     private ItemStack getResult(String id) {
         String type = recipeConfig.getString("Recipes." + id + ".result.type");
         String material = recipeConfig.getString("Recipes." + id + ".result.item");
@@ -165,6 +172,19 @@ public class RecipeManager {
                 }
 
                 loadSmokingRecipe(id, input, exp, time);
+            } else if(recipeType.equalsIgnoreCase("campfire")) {
+                String material = recipeConfig.getString("Recipes." + recipe + ".input.item");
+                String type = recipeConfig.getString("Recipes." + recipe + ".input.type");
+                float exp = (float) recipeConfig.getDouble("Recipes." + recipe + ".exp");
+                int time = recipeConfig.getInt("Recipes." + recipe + ".time") * 20;
+                ItemStack input = null;
+                if(type.equalsIgnoreCase("material")) {
+                    input = new ItemStack(Material.valueOf(material));
+                } else if(type.equalsIgnoreCase("item")) {
+                    input = HephaestusForge.config.savedItems.get(material);
+                }
+
+                loadCampfireRecipe(id, input, exp, time);
             }
         }
     }

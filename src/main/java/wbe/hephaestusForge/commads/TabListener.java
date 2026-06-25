@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.CookingRecipe;
 import org.bukkit.inventory.CraftingRecipe;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.util.StringUtil;
@@ -72,12 +73,25 @@ public class TabListener implements TabCompleter {
                     Iterator<Recipe> recipes = Bukkit.recipeIterator();
                     while(recipes.hasNext()) {
                         Recipe recipe = recipes.next();
-                        if(!(recipe instanceof CraftingRecipe craftingRecipe)) {
-                            continue;
+                        if(recipe instanceof CraftingRecipe craftingRecipe) {
+                            if(craftingRecipe.getKey().getNamespace().equalsIgnoreCase(args[1])) {
+                                completions.add(craftingRecipe.getKey().getKey());
+                            }
+                        } else if(recipe instanceof CookingRecipe<?> cookingRecipe) {
+                            if(cookingRecipe.getKey().getNamespace().equalsIgnoreCase(args[1])) {
+                                completions.add(cookingRecipe.getKey().getKey());
+                            }
                         }
-
-                        completions.add(craftingRecipe.getKey().getKey());
                     }
+                    break;
+            }
+        }
+
+        // Argumento 3
+        if(args.length == 4) {
+            switch(args[0].toLowerCase()) {
+                case "recipe":
+                    completions.add("[Página]");
                     break;
             }
         }

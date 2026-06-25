@@ -15,7 +15,7 @@ Messages:
     - "&b/hephaestusforge &eMuestra esta página."
     - "&b/hephaestusforge give <Objeto> [Jugador] &eDa un objeto a un jugador."
     - "&b/hephaestusforge addItem <Identificador> &eAñade un objeto al archivo de objetos."
-    - "&b/hephaestusforge recipe <Ámbito> <Receta> &eMuestra un menú con la receta seleccionada."
+    - "&b/hephaestusforge recipe <Ámbito> <Receta> [Página] &eMuestra un menú con la receta seleccionada."
     - "&b/hephaestusforge reload &eRecarga el plugin."
     - "&b"
     - "&eLeyenda: &b<> &eObligatorio  &b[] &eOpcional"
