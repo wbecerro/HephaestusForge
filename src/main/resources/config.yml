@@ -83,6 +83,22 @@ Piglin:
       item: DRAGON_EGG
       amount: 2
 
+Sniffer:
+  chance: 1
+  name: "&6&lOlfateador ancestral"
+  glow: true
+  items:
+    example:
+      weight: 200
+      type: material
+      item: BEDROCK
+      amount: 4
+    example2:
+      weight: 250
+      type: material
+      item: DRAGON_EGG
+      amount: 2
+
 # https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/loot/LootTables.html
 LuckLevelMultiplier: 0.5
 LootTables:

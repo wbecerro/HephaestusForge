@@ -16,5 +16,6 @@ public class EventListeners {
         pluginManager.registerEvents(new PiglinBarterListeners(), plugin);
         pluginManager.registerEvents(new LootGenerateListeners(), plugin);
         pluginManager.registerEvents(new MenuListeners(), plugin);
+        pluginManager.registerEvents(new EntityDropItemListeners(), plugin);
     }
 }

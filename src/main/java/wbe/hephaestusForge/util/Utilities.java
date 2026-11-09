@@ -11,6 +11,7 @@ import org.bukkit.loot.LootTables;
 import wbe.hephaestusForge.HephaestusForge;
 import wbe.hephaestusForge.config.LootTableItem;
 import wbe.hephaestusForge.config.PiglinTrade;
+import wbe.hephaestusForge.config.SnifferReward;
 import wbe.hephaestusForge.config.WanderingRecipe;
 import wbe.hephaestusForge.items.ExecutableItem;
 import wbe.hephaestusForge.items.Item;
@@ -86,6 +87,22 @@ public class Utilities {
         Set<PiglinTrade> trades = HephaestusForge.config.piglinTrades;
 
         for(PiglinTrade trade : trades) {
+            weight += trade.getWeight();
+            if(randomNumber < weight) {
+                return trade;
+            }
+        }
+
+        return trades.stream().toList().getLast();
+    }
+
+    public SnifferReward getRandomReward() {
+        Random random = new Random();
+        double randomNumber = random.nextDouble(HephaestusForge.config.snifferTotalWeight);
+        double weight = 0;
+        Set<SnifferReward> trades = HephaestusForge.config.snifferRewards;
+
+        for(SnifferReward trade : trades) {
             weight += trade.getWeight();
             if(randomNumber < weight) {
                 return trade;

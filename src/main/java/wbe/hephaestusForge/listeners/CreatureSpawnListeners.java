@@ -1,14 +1,17 @@
 package wbe.hephaestusForge.listeners;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Piglin;
+import org.bukkit.entity.Sniffer;
 import org.bukkit.entity.WanderingTrader;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.MerchantRecipe;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import wbe.hephaestusForge.HephaestusForge;
@@ -22,6 +25,31 @@ import java.util.Random;
 public class CreatureSpawnListeners implements Listener {
 
     private Utilities utilities = new Utilities();
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void handleSpecialSniffer(CreatureSpawnEvent event) {
+        if(event.isCancelled()) {
+            return;
+        }
+
+        if(!event.getEntityType().equals(EntityType.SNIFFER)) {
+            return;
+        }
+
+        Random random = new Random();
+        if(random.nextDouble(100) > HephaestusForge.config.snifferChance) {
+            return;
+        }
+
+        Sniffer sniffer = (Sniffer) event.getEntity();
+        sniffer.setCustomName(HephaestusForge.config.snifferName);
+        if(HephaestusForge.config.snifferGlow) {
+            sniffer.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, PotionEffect.INFINITE_DURATION, 1));
+        }
+
+        NamespacedKey snifferKey = new NamespacedKey(HephaestusForge.getInstance(), "specialSniffer");
+        sniffer.getPersistentDataContainer().set(snifferKey, PersistentDataType.BOOLEAN, true);
+    }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void handleSpecialWanderingTraders(CreatureSpawnEvent event) {
@@ -40,7 +68,9 @@ public class CreatureSpawnListeners implements Listener {
 
         WanderingTrader wanderingTrader = (WanderingTrader) event.getEntity();
         wanderingTrader.setCustomName(HephaestusForge.config.wanderingName);
-        wanderingTrader.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, PotionEffect.INFINITE_DURATION, 1));
+        if(HephaestusForge.config.wanderingGlow) {
+            wanderingTrader.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, PotionEffect.INFINITE_DURATION, 1));
+        }
 
         List<MerchantRecipe> recipes = new ArrayList<>(wanderingTrader.getRecipes());
         int newTrades = random.nextInt(1, HephaestusForge.config.maxExtraTrades + 1);

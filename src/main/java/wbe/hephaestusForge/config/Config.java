@@ -34,6 +34,11 @@ public class Config {
     public List<Material> interestItems = new ArrayList<>();
     public Set<PiglinTrade> piglinTrades = new HashSet<>();
 
+    public double snifferChance;
+    public String snifferName;
+    public boolean snifferGlow;
+    public Set<SnifferReward> snifferRewards = new HashSet<>();
+
     public double luckLevelMultiplier;
 
     public HashMap<String, Item> items = new HashMap<>();
@@ -46,6 +51,7 @@ public class Config {
 
     public int wanderingRecipesMaxWeight = 0;
     public int piglinTotalWeight = 0;
+    public int snifferTotalWeight = 0;
 
     public Config(FileConfiguration config, FileConfiguration itemsConfig) {
         this.config = config;
@@ -92,11 +98,16 @@ public class Config {
             interestItems.add(Material.valueOf(material));
         });
 
+        snifferChance = config.getDouble("Sniffer.chance");
+        snifferName = config.getString("Sniffer.name").replace("&", "§");
+        snifferGlow = config.getBoolean("Sniffer.glow");
+
         luckLevelMultiplier = config.getDouble("LuckLevelMultiplier");
 
         loadExecutableItems();
         loadWanderingRecipes();
         loadPiglinTrades();
+        loadSnifferRewards();
         loadLootTables();
     }
 
@@ -149,6 +160,16 @@ public class Config {
             piglinTotalWeight += weight;
             ItemStack item = parseItem("Piglin.trades." + trade);
             piglinTrades.add(new PiglinTrade(trade, weight, item));
+        }
+    }
+
+    private void loadSnifferRewards() {
+        Set<String> trades = config.getConfigurationSection("Sniffer.items").getKeys(false);
+        for(String trade : trades) {
+            int weight = config.getInt("Sniffer.items." + trade + ".weight");
+            snifferTotalWeight += weight;
+            ItemStack item = parseItem("Sniffer.items." + trade);
+            snifferRewards.add(new SnifferReward(trade, weight, item));
         }
     }
 
