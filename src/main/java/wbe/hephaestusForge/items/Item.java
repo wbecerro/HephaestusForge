@@ -16,12 +16,15 @@ public class Item {
 
     private boolean glow;
 
-    public Item(Material material, String name, List<String> lore, List<String> commands, boolean glow) {
+    private boolean infinite;
+
+    public Item(Material material, String name, List<String> lore, List<String> commands, boolean glow, boolean infinite) {
         this.material = material;
         this.name = name;
         this.lore = lore;
         this.commands = commands;
         this.glow = glow;
+        this.infinite = infinite;
     }
 
     public Material getMaterial() {
@@ -62,5 +65,13 @@ public class Item {
 
     public void setGlow(boolean glow) {
         this.glow = glow;
+    }
+
+    public boolean isInfinite() {
+        return infinite;
+    }
+
+    public void setInfinite(boolean infinite) {
+        this.infinite = infinite;
     }
 }

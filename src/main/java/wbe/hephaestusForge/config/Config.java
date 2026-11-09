@@ -107,8 +107,9 @@ public class Config {
             List<String> lore = config.getStringList("Items." + item + ".lore");
             List<String> commands = config.getStringList("Items." + item + ".commands");
             boolean glow = config.getBoolean("Items." + item + ".glow");
+            boolean infinite = config.getBoolean("Items." + item + ".infinite");
 
-            items.put(item, new Item(material, name, lore, commands, glow));
+            items.put(item, new Item(material, name, lore, commands, glow, infinite));
         }
     }
 

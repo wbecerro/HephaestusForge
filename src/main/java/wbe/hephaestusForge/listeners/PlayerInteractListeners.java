@@ -82,7 +82,10 @@ public class PlayerInteractListeners implements Listener {
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
         }
 
-        item.setAmount(item.getAmount() - 1);
+        if(!executable.isInfinite()) {
+            item.setAmount(item.getAmount() - 1);
+        }
+
         player.sendMessage(HephaestusForge.messages.itemUsed);
         event.setCancelled(true);
     }
