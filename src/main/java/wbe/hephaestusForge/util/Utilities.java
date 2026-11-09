@@ -56,6 +56,7 @@ public class Utilities {
         try {
             itemsConfig.save(HephaestusForge.getInstance().items);
             HephaestusForge.getInstance().reloadConfiguration();
+            HephaestusForge.config.savedItems.put(identifier, item);
             return true;
         } catch(IOException e) {
             throw new RuntimeException("Error while trying to save the items file.");
