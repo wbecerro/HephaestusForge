@@ -1,6 +1,7 @@
 package wbe.hephaestusForge.util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -9,10 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.loot.LootTables;
 import wbe.hephaestusForge.HephaestusForge;
-import wbe.hephaestusForge.config.LootTableItem;
-import wbe.hephaestusForge.config.PiglinTrade;
-import wbe.hephaestusForge.config.SnifferReward;
-import wbe.hephaestusForge.config.WanderingRecipe;
+import wbe.hephaestusForge.config.*;
 import wbe.hephaestusForge.items.ExecutableItem;
 import wbe.hephaestusForge.items.Item;
 
@@ -80,20 +78,14 @@ public class Utilities {
         return recipes.stream().toList().getLast();
     }
 
-    public PiglinTrade getRandomTrade() {
-        Random random = new Random();
-        double randomNumber = random.nextDouble(HephaestusForge.config.piglinTotalWeight);
-        double weight = 0;
-        Set<PiglinTrade> trades = HephaestusForge.config.piglinTrades;
-
-        for(PiglinTrade trade : trades) {
-            weight += trade.getWeight();
-            if(randomNumber < weight) {
-                return trade;
+    public PiglinTradeTier getTierByInput(Material input) {
+        for(PiglinTradeTier tier : HephaestusForge.config.piglinTiers) {
+            if(tier.getInterests().contains(input)) {
+                return tier;
             }
         }
 
-        return trades.stream().toList().getLast();
+        return null;
     }
 
     public SnifferReward getRandomReward() {

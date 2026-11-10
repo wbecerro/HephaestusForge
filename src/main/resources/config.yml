@@ -72,16 +72,69 @@ Piglin:
     - ECHO_SHARD
     - RESIN_CLUMP
   trades:
-    example:
-      weight: 200
-      type: material
-      item: BEDROCK
-      amount: 4
-    example2:
-      weight: 250
-      type: material
-      item: DRAGON_EGG
-      amount: 2
+    tier1:
+      interests:
+        - COPPER_INGOT
+        - IRON_INGOT
+        - LAPIS_LAZULI
+      rewards:
+        example:
+          weight: 200
+          type: material
+          item: BEDROCK
+          amount: 4
+        example2:
+          weight: 250
+          type: material
+          item: DRAGON_EGG
+          amount: 2
+    tier2:
+      interests:
+        - GOLD_INGOT
+        - QUARTZ
+        - AMETHYST_SHARD
+        - RESIN_CLUMP
+      rewards:
+        example:
+          weight: 200
+          type: material
+          item: BEDROCK
+          amount: 4
+        example2:
+          weight: 250
+          type: material
+          item: DRAGON_EGG
+          amount: 2
+    tier3:
+      interests:
+        - EMERALD
+        - DIAMOND
+        - ECHO_SHARD
+      rewards:
+        example:
+          weight: 200
+          type: material
+          item: BEDROCK
+          amount: 4
+        example2:
+          weight: 250
+          type: material
+          item: DRAGON_EGG
+          amount: 2
+    tier4:
+      interests:
+        - NETHERITE_INGOT
+      rewards:
+        example:
+          weight: 200
+          type: material
+          item: BEDROCK
+          amount: 4
+        example2:
+          weight: 250
+          type: material
+          item: DRAGON_EGG
+          amount: 2
 
 Sniffer:
   chance: 1

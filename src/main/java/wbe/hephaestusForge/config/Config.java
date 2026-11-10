@@ -31,8 +31,8 @@ public class Config {
     public boolean wanderingGlow;
 
     public int vanillaPiglinWeight;
+    public Set<PiglinTradeTier> piglinTiers = new HashSet<>();
     public List<Material> interestItems = new ArrayList<>();
-    public Set<PiglinTrade> piglinTrades = new HashSet<>();
 
     public double snifferChance;
     public String snifferName;
@@ -50,7 +50,6 @@ public class Config {
     public HashMap<LootTables, Set<LootTableItem>> lootTables = new HashMap<>();
 
     public int wanderingRecipesMaxWeight = 0;
-    public int piglinTotalWeight = 0;
     public int snifferTotalWeight = 0;
 
     public Config(FileConfiguration config, FileConfiguration itemsConfig) {
@@ -106,7 +105,7 @@ public class Config {
 
         loadExecutableItems();
         loadWanderingRecipes();
-        loadPiglinTrades();
+        loadPiglinTiers();
         loadSnifferRewards();
         loadLootTables();
     }
@@ -153,13 +152,25 @@ public class Config {
         }
     }
 
-    private void loadPiglinTrades() {
-        Set<String> trades = config.getConfigurationSection("Piglin.trades").getKeys(false);
-        for(String trade : trades) {
-            int weight = config.getInt("Piglin.trades." + trade + ".weight");
-            piglinTotalWeight += weight;
-            ItemStack item = parseItem("Piglin.trades." + trade);
-            piglinTrades.add(new PiglinTrade(trade, weight, item));
+    private void loadPiglinTiers() {
+        Set<String> tiers = config.getConfigurationSection("Piglin.trades").getKeys(false);
+        for(String tier : tiers) {
+            Set<Material> interests = new HashSet<>();
+            config.getStringList("Piglin.trades." + tier + ".interests").forEach((material) -> {
+                interests.add(Material.valueOf(material));
+            });
+
+            Set<String> trades = config.getConfigurationSection("Piglin.trades." + tier + ".rewards").getKeys(false);
+            Set<PiglinTrade> piglinTrades = new HashSet<>();
+            int totalWeight = 0;
+            for(String trade : trades) {
+                int weight = config.getInt("Piglin.trades." + tier + ".rewards." + trade + ".weight");
+                totalWeight += weight;
+                ItemStack item = parseItem("Piglin.trades." + tier + ".rewards." + trade);
+                piglinTrades.add(new PiglinTrade(trade, weight, item));
+            }
+
+            piglinTiers.add(new PiglinTradeTier(tier, totalWeight, piglinTrades, interests));
         }
     }
 

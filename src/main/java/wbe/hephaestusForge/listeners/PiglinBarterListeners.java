@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PiglinBarterEvent;
 import org.bukkit.inventory.ItemStack;
 import wbe.hephaestusForge.HephaestusForge;
+import wbe.hephaestusForge.config.PiglinTradeTier;
 import wbe.hephaestusForge.util.Utilities;
 
 import java.util.List;
@@ -21,7 +22,13 @@ public class PiglinBarterListeners implements Listener {
             return;
         }
 
-        int totalWeight = HephaestusForge.config.vanillaPiglinWeight + HephaestusForge.config.piglinTotalWeight;
+        PiglinTradeTier tier = utilities.getTierByInput(event.getInput().getType());
+
+        if(tier == null) {
+            return;
+        }
+
+        int totalWeight = HephaestusForge.config.vanillaPiglinWeight + tier.getTotalWeight();
         Random random = new Random();
         if(random.nextInt(totalWeight) <= HephaestusForge.config.vanillaPiglinWeight) {
             return;
@@ -29,6 +36,6 @@ public class PiglinBarterListeners implements Listener {
 
         List<ItemStack> outcome = event.getOutcome();
         outcome.clear();
-        outcome.add(utilities.getRandomTrade().getItem().clone());
+        outcome.add(tier.getRandomReward().getItem().clone());
     }
 }
