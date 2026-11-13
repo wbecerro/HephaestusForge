@@ -106,6 +106,32 @@ public class CommandListener implements CommandExecutor {
                     sender.sendMessage(ex.getMessage());
                     ex.printStackTrace();
                 }
+            } else if(args[0].equalsIgnoreCase("item")) {
+                if(!sender.hasPermission("hephaestusforge.command.item")) {
+                    sender.sendMessage(HephaestusForge.messages.noPermission);
+                    return false;
+                }
+
+                if(args.length < 2) {
+                    sender.sendMessage(HephaestusForge.messages.notEnoughArgs);
+                    sender.sendMessage(HephaestusForge.messages.savedItemGiveArgs);
+                    return false;
+                }
+
+                if(args.length > 2) {
+                    player = Bukkit.getPlayer(args[2]);
+                }
+
+                boolean ok = utilities.giveSavedItem(player, args[1]);
+                if(ok) {
+                    ItemStack item = utilities.getSavedItemByName(args[1]);
+                    sender.sendMessage(HephaestusForge.messages.savedItemGiven
+                            .replace("%item%", item.getItemMeta().getDisplayName())
+                            .replace("%player%", player.getName()));
+                } else {
+                    sender.sendMessage(HephaestusForge.messages.itemNotFound
+                            .replace("%item%", args[1]));
+                }
             }
         }
 

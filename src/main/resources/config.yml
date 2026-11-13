@@ -10,10 +10,13 @@ Messages:
   itemAlreadyExists: '&b[&cForja&b] &eEl objeto con el identificador %identifier% ya existe.'
   reload: '&b[&cForja&b] &eSe ha recargado la configuración del plugin.'
   recipeNotSupported: '&b[&cForja&b] &eEsa receta no está soportada.'
+  savedItemGiven: '&b[&cForja&b] &eHas dado %item% &ea %player%.'
+  savedItemGiveArgs: '&b[&cForja&b] &eEl uso es /hephaestusforge item <Objeto> [Jugador]'
   help:
     - "&d-===- &c[Forja] &d-===-"
     - "&b/hephaestusforge &eMuestra esta página."
     - "&b/hephaestusforge give <Objeto> [Jugador] &eDa un objeto a un jugador."
+    - "&b/hephaestusforge item <Objeto> [Jugador] &eDa un objeto del repositorio a un jugador."
     - "&b/hephaestusforge addItem <Identificador> &eAñade un objeto al archivo de objetos."
     - "&b/hephaestusforge recipe <Ámbito> <Receta> [Página] &eMuestra un menú con la receta seleccionada."
     - "&b/hephaestusforge reload &eRecarga el plugin."

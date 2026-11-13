@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.CraftingRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.loot.LootTables;
@@ -24,6 +23,10 @@ public class Utilities {
         return HephaestusForge.config.items.get(name);
     }
 
+    public ItemStack getSavedItemByName(String name) {
+        return HephaestusForge.config.savedItems.get(name);
+    }
+
     public boolean giveItem(Player player, String name) {
         Item item = getItemByName(name);
         if(item == null) {
@@ -40,6 +43,25 @@ public class Utilities {
 
         player.sendMessage(HephaestusForge.messages.itemGivenPlayer
                 .replace("%item%", executableItem.getItemMeta().getDisplayName()));
+
+        return true;
+    }
+
+    public boolean giveSavedItem(Player player, String name) {
+        ItemStack item = getSavedItemByName(name);
+        if(item == null) {
+            return false;
+        }
+
+        if(player.getInventory().firstEmpty() == -1) {
+            player.getWorld().dropItem(player.getLocation(), item);
+        } else {
+            player.getInventory().addItem(item);
+        }
+        player.updateInventory();
+
+        player.sendMessage(HephaestusForge.messages.itemGivenPlayer
+                .replace("%item%", item.getItemMeta().getDisplayName()));
 
         return true;
     }

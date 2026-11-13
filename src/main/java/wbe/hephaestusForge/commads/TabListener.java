@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TabListener implements TabCompleter {
 
-    private final List<String> subCommands = Arrays.asList("help", "give", "addItem", "recipe", "reload");
+    private final List<String> subCommands = Arrays.asList("help", "give", "item", "addItem", "recipe", "reload");
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
@@ -45,6 +45,15 @@ public class TabListener implements TabCompleter {
                         }
                     }
                     break;
+                case "item":
+                    for(String item : HephaestusForge.config.savedItems.keySet()) {
+                        if(args[1].isEmpty()) {
+                            completions.add(item);
+                        } else if(item.startsWith(args[1])) {
+                            completions.add(item);
+                        }
+                    }
+                    break;
                 case "additem":
                     completions.add("<Identificador>");
                     break;
@@ -60,6 +69,7 @@ public class TabListener implements TabCompleter {
         // Argumento 2
         if(args.length == 3) {
             switch(args[0].toLowerCase()) {
+                case "item":
                 case "give":
                     for(Player player : Bukkit.getOnlinePlayers()) {
                         if(args[2].isEmpty()) {

@@ -38,7 +38,7 @@ public class LootGenerateListeners implements Listener {
         Player player;
         if(uuid != null) {
             player = Bukkit.getPlayer(uuid);
-            luckMultiplier = 1 + HephaestusForge.config.luckLevelMultiplier * player.getAttribute(Attribute.GENERIC_LUCK).getValue();
+            luckMultiplier = 1 + HephaestusForge.config.luckLevelMultiplier * player.getAttribute(Attribute.LUCK).getValue();
         }
 
         Random random = new Random();

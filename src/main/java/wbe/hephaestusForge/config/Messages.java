@@ -20,6 +20,8 @@ public class Messages {
     public String itemAdded;
     public String itemAlreadyExists;
     public String recipeNotSupported;
+    public String savedItemGiven;
+    public String savedItemGiveArgs;
     public List<String> help = new ArrayList<>();
 
     public Messages(FileConfiguration config) {
@@ -36,6 +38,8 @@ public class Messages {
         itemAdded = config.getString("Messages.itemAdded").replace("&", "§");
         itemAlreadyExists = config.getString("Messages.itemAlreadyExists").replace("&", "§");
         recipeNotSupported = config.getString("Messages.recipeNotSupported").replace("&", "§");
+        savedItemGiven = config.getString("Messages.savedItemGiven").replace("&", "§");
+        savedItemGiveArgs = config.getString("Messages.savedItemGiveArgs").replace("&", "§");
         help = config.getStringList("Messages.help");
     }
 }
